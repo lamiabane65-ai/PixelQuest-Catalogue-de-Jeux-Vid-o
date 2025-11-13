@@ -9,6 +9,7 @@
 </head>
 <body class="bg-[#03396C] m-4">
  
+
   <aside>
     <nav class="bg-[#0D062F] w-[98%] rounded-full p-4 flex items-center justify-between mx-auto mt-6">
       <ul class="flex items-center gap-4 w-full">
@@ -108,6 +109,56 @@
     </aside>
 
     <!-- Image principale -->
+
+<aside>
+  <nav class="bg-[#0D062F] w-[98%] rounded-full p-4 flex items-center justify-between mx-auto mt-6">
+    <ul class="flex items-center gap-4 w-full">
+      
+      <!-- Burger menu mobile à gauche -->
+      <li class="md:hidden">
+        <button id="burgerBtn" class="focus:outline-none">
+          <img src="assets/images/menu-burger.png" alt="Menu Burger" class="w-8 h-8">
+        </button>
+      </li>
+
+      <!-- Logo -->
+      <li>
+        <img src="assets/images/logo.jpeg" alt="logo" class="w-20 rounded-full">
+      </li>
+
+      <!-- Barre de recherche -->
+      <li class="flex-1">
+        <input type="text" id="rechercher" name="rechercher" placeholder="Rechercher"
+               class="bg-[#7826AB] w-[98%] rounded-full px-4 py-2 text-white placeholder-white placeholder-opacity-100 text-center">
+      </li>
+
+      <!-- Liens desktop -->
+      <li class="hidden md:block">
+        <a href="#" 
+           class="bg-[#7826AB] text-white px-6 py-2 rounded-full text-lg hover:bg-[#9b4cd8] transition duration-300">
+           Accueil
+        </a>
+      </li>
+      <li class="hidden md:block">
+        <a href="Favoris.html" 
+           class="bg-[#7826AB] text-white px-6 py-2 rounded-full text-lg hover:bg-[#9b4cd8] transition">
+           Favoris
+        </a>
+      </li>
+
+    </ul>
+  </nav>
+</aside>
+
+
+<section class="w-[95%] mx-auto my-8">
+  <div class="flex flex-col md:flex-row min-h-[400px] md:min-h-[550px] rounded-3xl overflow-hidden">
+    
+    <!-- Espace vide pour barre de filtres (visible sur desktop/tablet) -->
+    <div class="hidden md:block md:w-1/4"></div>
+
+    <!-- Image à droite / en haut sur mobile -->
+
     <div class="w-full md:w-3/4 relative rounded-3xl overflow-hidden">
       <img 
         src="assets/images/hero section.jpeg" 
@@ -127,10 +178,25 @@
     </div>
   </section>
 
-  <section class="w-11/12 mx-auto py-10">
-    <!-- Future grille des jeux ici -->
-  </section>
 
-</body>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 </html>
 
