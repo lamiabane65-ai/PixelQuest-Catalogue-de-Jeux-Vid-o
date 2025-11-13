@@ -12,7 +12,15 @@
 </body>
 <aside>
   <nav class="bg-[#0D062F] w-[98%] rounded-full p-4 flex items-center justify-between mx-auto mt-6">
-    <ul class="flex items-center gap-6 w-full">
+    <ul class="flex items-center gap-4 w-full">
+      
+      <!-- Burger menu mobile à gauche -->
+      <li class="md:hidden">
+        <button id="burgerBtn" class="focus:outline-none">
+          <img src="assets/images/menu-burger.png" alt="Menu Burger" class="w-8 h-8">
+        </button>
+      </li>
+
       <!-- Logo -->
       <li>
         <img src="assets/images/logo.jpeg" alt="logo" class="w-20 rounded-full">
@@ -24,43 +32,45 @@
                class="bg-[#7826AB] w-[98%] rounded-full px-4 py-2 text-white placeholder-white placeholder-opacity-100 text-center">
       </li>
 
-      <!-- Accueil -->
-      <li>
+      <!-- Liens desktop -->
+      <li class="hidden md:block">
         <a href="#" 
-           class="bg-[#7826AB] text-white px-6 py-2 rounded-full text-lg hover:bg-[#9b4cd8] transition duration-300
-">
+           class="bg-[#7826AB] text-white px-6 py-2 rounded-full text-lg hover:bg-[#9b4cd8] transition duration-300">
            Accueil
         </a>
       </li>
-
-      <!-- Favoris -->
-      <li>
+      <li class="hidden md:block">
         <a href="Favoris.html" 
            class="bg-[#7826AB] text-white px-6 py-2 rounded-full text-lg hover:bg-[#9b4cd8] transition">
            Favoris
         </a>
       </li>
+
     </ul>
   </nav>
 </aside>
 
-<!-- Hero Section responsive -->
+
 <section class="w-[95%] mx-auto my-8">
-  <div class="flex flex-col md:flex-row min-h-[300px] md:min-h-[400px] rounded-3xl overflow-hidden">
+  <div class="flex flex-col md:flex-row min-h-[400px] md:min-h-[550px] rounded-3xl overflow-hidden">
+    
+    <!-- Espace vide pour barre de filtres (visible sur desktop/tablet) -->
+    <div class="hidden md:block md:w-1/4"></div>
 
-    <!-- Espace vide à gauche pour futur filtre -->
-    <div class="w-full md:w-1/4"></div>
-
-    <!-- Photo à droite -->
+    <!-- Image à droite / en haut sur mobile -->
     <div class="w-full md:w-3/4 relative rounded-3xl overflow-hidden">
-      <!-- Image -->
-      <img src="assets/images/hero section.jpeg" 
-           alt="Play Games Have Fun Neon Sign" 
-           class="w-full h-full object-cover rounded-3xl">
+      <img 
+        src="assets/images/hero section.jpeg" 
+        alt="Hero Image" 
+        class="w-full h-full object-cover rounded-3xl"
+      >
 
-      <!-- Lien Explorer dans div stylisée -->
-      <div class="absolute bottom-6 left-6 z-20">
-        <a href="index.html" class="bg-[#005B96] px-6 py-3 rounded-full shadow-lg hover:bg-[#0073b3] transition font-bold text-white text-lg">
+      <!-- Bouton Explorer : bas à gauche -->
+      <div class="absolute bottom-6 left-6">
+        <a 
+          href="#"
+          class="bg-[#005B96] px-8 py-3 rounded-full shadow-lg hover:bg-[#0073b3] transition font-bold text-white text-lg"
+        >
           Explorer
         </a>
       </div>
@@ -68,6 +78,14 @@
 
   </div>
 </section>
+
+
+
+
+
+
+
+
 
 
 
