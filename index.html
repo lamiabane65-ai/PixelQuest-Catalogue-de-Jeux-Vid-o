@@ -9,118 +9,105 @@
 </head>
 <body class="bg-[#03396C] m-4">
  
+  <aside>
+    <nav class="bg-[#0D062F] w-[98%] rounded-full p-4 flex items-center justify-between mx-auto mt-6">
+      <ul class="flex items-center gap-4 w-full">
+        
+        <!-- Burger menu mobile à gauche -->
+        <li class="md:hidden">
+          <button id="burgerBtn" class="focus:outline-none">
+            <img src="assets/images/menu-burger.png" alt="Menu Burger" class="w-8 h-8">
+          </button>
+        </li>
 
-<aside>
-  <nav class="bg-[#0D062F] w-[98%] rounded-full p-4 flex items-center justify-between mx-auto mt-6">
-    <ul class="flex items-center gap-4 w-full">
-      
-      <!-- Burger menu mobile à gauche -->
-      <li class="md:hidden">
-        <button id="burgerBtn" class="focus:outline-none">
-          <img src="assets/images/menu-burger.png" alt="Menu Burger" class="w-8 h-8">
+        <!-- Logo -->
+        <li>
+          <img src="assets/images/logo.jpeg" alt="logo" class="w-20 rounded-full">
+        </li>
+
+        <!-- Barre de recherche -->
+        <li class="flex-1">
+          <input type="text" id="rechercher" name="rechercher" placeholder="Rechercher"
+                class="bg-[#7826AB] w-[98%] rounded-full px-4 py-2 text-white placeholder-white placeholder-opacity-100 text-center">
+        </li>
+
+        <!-- Liens desktop -->
+        <li class="hidden md:block">
+          <a href="#" 
+            class="bg-[#7826AB] text-white px-6 py-2 rounded-full text-lg hover:bg-[#9b4cd8] transition duration-300">
+            Accueil
+          </a>
+        </li>
+        <li class="hidden md:block">
+          <a href="Favoris.html" 
+            class="bg-[#7826AB] text-white px-6 py-2 rounded-full text-lg hover:bg-[#9b4cd8] transition">
+            Favoris
+          </a>
+        </li>
+
+      </ul>
+    </nav>
+  </aside>
+
+  <!-- SECTION HERO + BARRE DE FILTRES côte à côte -->
+  <section class="w-[95%] mx-auto my-8 flex flex-col md:flex-row gap-6">
+    
+    <!-- Barre de filtres -->
+    <aside class="w-full md:w-1/4 bg-[#0D062F] p-4 rounded-2xl text-white space-y-3">
+      <h2 class="text-lg font-semibold mb-2 text-center">Filters</h2>
+
+      <!-- Filtres par plateforme -->
+      <button class="w-full bg-[#2B1E73] hover:bg-[#4A33B4] text-white rounded-full py-2 px-4 transition duration-300">
+        Par plateforme
+      </button>
+
+      <!-- Filtres par genre -->
+      <button class="w-full bg-[#2B1E73] hover:bg-[#4A33B4] text-white rounded-full py-2 px-4 transition duration-300">
+        Par genre
+      </button>
+
+      <!-- Filtres par note -->
+      <button class="w-full bg-[#2B1E73] hover:bg-[#4A33B4] text-white rounded-full py-2 px-4 transition duration-300">
+        Par note
+      </button>
+
+      <!-- Catégories -->
+      <div class="mt-4 space-y-2">
+        <button class="w-full bg-[#46328A] hover:bg-[#5E43B4] text-white rounded-full py-2 px-4 transition duration-300">
+          Action
         </button>
-      </li>
-
-      <!-- Logo -->
-      <li>
-        <img src="assets/images/logo.jpeg" alt="logo" class="w-20 rounded-full">
-      </li>
-
-      <!-- Barre de recherche -->
-      <li class="flex-1">
-        <input type="text" id="rechercher" name="rechercher" placeholder="Rechercher"
-               class="bg-[#7826AB] w-[98%] rounded-full px-4 py-2 text-white placeholder-white placeholder-opacity-100 text-center">
-      </li>
-
-      <!-- Accueil (desktop) -->
-      <li class="hidden md:block">
-        <a href="#" 
-           class="bg-[#7826AB] text-white px-6 py-2 rounded-full text-lg hover:bg-[#9b4cd8] transition duration-300">
-           Accueil
-        </a>
-      </li>
-
-      <!-- Favoris (desktop) -->
-      <li class="hidden md:block">
-        <a href="Favoris.html" 
-           class="bg-[#7826AB] text-white px-6 py-2 rounded-full text-lg hover:bg-[#9b4cd8] transition">
-           Favoris
-        </a>
-      </li>
-
-    </ul>
-  </nav>
-</aside>
-<section class="w-[95%] mx-auto my-8">
-  <div class="flex flex-col md:flex-row gap-4 min-h-[400px] md:min-h-[550px]">
-
-    <!-- Barre de filtres desktop (toujours visible sur desktop) -->
-    <aside class="hidden md:flex md:flex-col md:w-1/4 bg-[#0D062F] rounded-3xl p-6 gap-6">
-      <h2 class="text-white text-xl font-bold">Filters</h2>
-
-      <!-- Par plateforme -->
-      <div>
-        <h3 class="text-[#7826AB] font-bold mb-2">Par plateforme</h3>
-        <div class="flex flex-col gap-2">
-          <label class="flex items-center text-white">
-            <input type="checkbox" class="mr-2 rounded bg-[#7826AB] border-[#7826AB]">
-            Action
-          </label>
-          <label class="flex items-center text-white">
-            <input type="checkbox" class="mr-2 rounded bg-[#7826AB] border-[#7826AB]">
-            RPG
-          </label>
-          <label class="flex items-center text-white">
-            <input type="checkbox" class="mr-2 rounded bg-[#7826AB] border-[#7826AB]">
-            Simulation
-          </label>
-        </div>
+        <button class="w-full bg-[#46328A] hover:bg-[#5E43B4] text-white rounded-full py-2 px-4 transition duration-300">
+          RPG
+        </button>
+        <button class="w-full bg-[#46328A] hover:bg-[#5E43B4] text-white rounded-full py-2 px-4 transition duration-300">
+          Simulation
+        </button>
+        <button class="w-full bg-[#46328A] hover:bg-[#5E43B4] text-white rounded-full py-2 px-4 transition duration-300">
+          PC
+        </button>
+        <button class="w-full bg-[#46328A] hover:bg-[#5E43B4] text-white rounded-full py-2 px-4 transition duration-300">
+          PlayStation
+        </button>
+        <button class="w-full bg-[#46328A] hover:bg-[#5E43B4] text-white rounded-full py-2 px-4 transition duration-300">
+          Xbox
+        </button>
+        <button class="w-full bg-[#46328A] hover:bg-[#5E43B4] text-white rounded-full py-2 px-4 transition duration-300">
+          Switch
+        </button>
       </div>
 
-      <!-- Par genre -->
-      <div>
-        <h3 class="text-[#7826AB] font-bold mb-2">Par genre</h3>
-        <div class="flex flex-col gap-2">
-          <label class="flex items-center text-white">
-            <input type="checkbox" class="mr-2 rounded bg-[#7826AB] border-[#7826AB]">
-            PC
-          </label>
-          <label class="flex items-center text-white">
-            <input type="checkbox" class="mr-2 rounded bg-[#7826AB] border-[#7826AB]">
-            PlayStation
-          </label>
-          <label class="flex items-center text-white">
-            <input type="checkbox" class="mr-2 rounded bg-[#7826AB] border-[#7826AB]">
-            Xbox
-          </label>
-          <label class="flex items-center text-white">
-            <input type="checkbox" class="mr-2 rounded bg-[#7826AB] border-[#7826AB]">
-            Switch
-          </label>
-        </div>
-      </div>
-
-      <!-- Par note -->
-      <div>
-        <h3 class="text-[#7826AB] font-bold mb-2">Par note</h3>
-        <div class="flex flex-col gap-2">
-          <label class="flex items-center text-white">
-            <input type="checkbox" class="mr-2 rounded bg-[#7826AB] border-[#7826AB]">
-            4.0+
-          </label>
-          <label class="flex items-center text-white">
-            <input type="checkbox" class="mr-2 rounded bg-[#7826AB] border-[#7826AB]">
-            3.5+
-          </label>
-          <label class="flex items-center text-white">
-            <input type="checkbox" class="mr-2 rounded bg-[#7826AB] border-[#7826AB]">
-            3.0+
-          </label>
-        </div>
+      <!-- Tri -->
+      <div class="mt-4">
+        <button class="w-full bg-[#6C49B8] hover:bg-[#8B68D9] text-white rounded-full py-2 px-4 transition duration-300">
+          Croissant
+        </button>
+        <button class="w-full bg-[#6C49B8] hover:bg-[#8B68D9] text-white rounded-full py-2 px-4 transition duration-300">
+          Décroissant
+        </button>
       </div>
     </aside>
 
-    <!-- Image Hero à droite -->
+    <!-- Image principale -->
     <div class="w-full md:w-3/4 relative rounded-3xl overflow-hidden">
       <img 
         src="assets/images/hero section.jpeg" 
@@ -128,7 +115,7 @@
         class="w-full h-full object-cover rounded-3xl"
       >
 
-      <!-- Bouton Explorer : bas à gauche -->
+      <!-- Bouton Explorer -->
       <div class="absolute bottom-6 left-6">
         <a 
           href="#"
@@ -138,15 +125,12 @@
         </a>
       </div>
     </div>
+  </section>
 
-  </div>
-</section>
-
-
-
-
+  <section class="w-11/12 mx-auto py-10">
+    <!-- Future grille des jeux ici -->
+  </section>
 
 </body>
-
-
 </html>
+
