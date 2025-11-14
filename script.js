@@ -1,3 +1,6 @@
+// ========================
+// CONFIG & VARIABLES
+// ========================
 const API_URL = "https://debuggers-games-api.duckdns.org/api/games";
 const grid = document.getElementById("gamesGrid");
 const searchInput = document.getElementById("rechercher");
@@ -11,8 +14,11 @@ let allGames = [];
 let filteredGames = [];
 let currentPage = 1;
 const gamesPerPage = 12;
+let favorites = JSON.parse(localStorage.getItem("favorites") || "[]");
 
+// ========================
 // FETCH DES JEUX
+// ========================
 async function fetchGames() {
   try {
     const response = await fetch(API_URL);
@@ -28,7 +34,56 @@ async function fetchGames() {
   }
 }
 
-// AFFICHAGE DES JEUX
+// ========================
+// NORMALISATION DES DONNÉES
+// ========================
+function extractNames(field) {
+  if (!field && field !== 0) return [];
+
+  // cas tableau
+  if (Array.isArray(field)) {
+    return field.map(item => {
+      if (!item && item !== 0) return null;
+      if (typeof item === 'string') return item;
+      if (typeof item === 'object') {
+        return item.name || (item.platform && item.platform.name) || (item.genre && item.genre.name) || null;
+      }
+      return null;
+    }).filter(Boolean);
+  }
+
+  // cas objet
+  if (typeof field === 'object') {
+    return [ field.name || (field.platform && field.platform.name) || (field.genre && field.genre.name) ].filter(Boolean);
+  }
+
+  // cas string / number
+  return [String(field)];
+}
+
+// ========================
+// FAVORIS
+// ========================
+function isFavorite(gameId) {
+  return favorites.includes(gameId);
+}
+
+function toggleFavorite(gameId, btn) {
+  if (favorites.includes(gameId)) {
+    favorites = favorites.filter(id => id !== gameId);
+    btn.classList.remove('bg-red-500');
+    btn.classList.add('bg-gray-600');
+  } else {
+    favorites.push(gameId);
+    btn.classList.remove('bg-gray-600');
+    btn.classList.add('bg-red-500');
+  }
+  localStorage.setItem("favorites", JSON.stringify(favorites));
+}
+
+// ========================
+// RENDU DES JEUX
+// ========================
 function renderGames() {
   grid.innerHTML = "";
   const start = (currentPage - 1) * gamesPerPage;
@@ -44,11 +99,10 @@ function renderGames() {
     const card = document.createElement("div");
     card.className = "bg-[#0D062F] text-white rounded-2xl overflow-hidden shadow-lg hover:scale-105 transition-transform";
 
-    const favorites = JSON.parse(localStorage.getItem("favorites") || "[]");
-    const isFavorite = favorites.includes(game.id);
+    const genreText = extractNames(game.genres ?? game.genre).join(", ") || "Genre inconnu";
+    const platformText = extractNames(game.platforms ?? game.platform).join(", ") || "Plateforme inconnue";
 
-    const genreText = Array.isArray(game.genre) ? game.genre.join(", ") : game.genre || "Genre inconnu";
-    const platformText = Array.isArray(game.platform) ? game.platform.join(", ") : game.platform || "Plateforme inconnue";
+    const isFav = isFavorite(game.id);
 
     card.innerHTML = `
       <img src="${game.background_image || 'assets/images/default-game.jpg'}" alt="${game.name}" class="w-full h-40 object-cover">
@@ -58,17 +112,22 @@ function renderGames() {
         <p class="text-xs text-gray-400 mt-1">${platformText}</p>
         <div class="mt-2 flex justify-between items-center">
           <a href="detail.html?id=${game.id}" class="text-purple-400 font-bold text-sm">Voir détails</a>
-          <button onclick="toggleFavorite(${game.id})" class="px-2 py-1 rounded ${isFavorite ? 'bg-red-500' : 'bg-gray-600'}">
-            ❤️
-          </button>
+          <button class="px-2 py-1 rounded ${isFav ? 'bg-red-500' : 'bg-gray-600'}">❤️</button>
         </div>
       </div>
     `;
+
     grid.appendChild(card);
+
+    // Bouton favoris
+    const favBtn = card.querySelector('button');
+    favBtn.addEventListener('click', () => toggleFavorite(game.id, favBtn));
   });
 }
 
+// ========================
 // PAGINATION
+// ========================
 function renderPagination() {
   paginationContainer.innerHTML = "";
   const pageCount = Math.ceil(filteredGames.length / gamesPerPage);
@@ -87,60 +146,23 @@ function renderPagination() {
   }
 }
 
-// helper : retourne un tableau de noms (ex: ["PC","Xbox"]) quel que soit le format d'entrée
-function extractNames(field) {
-  if (!field && field !== 0) return []; // vide si undefined/null
-
-  // cas : tableau
-  if (Array.isArray(field)) {
-    // tableau d'objets avec .name ou .platform.name
-    return field.map(item => {
-      if (!item && item !== 0) return null;
-      if (typeof item === 'string') return item;
-      if (typeof item === 'object') {
-        // ex: { name: "Action" } ou { platform: { name: "PC" } }
-        return item.name || (item.platform && item.platform.name) || (item.genre && item.genre.name) || null;
-      }
-      return null;
-    }).filter(Boolean);
-  }
-
-  // cas : objet
-  if (typeof field === 'object') {
-    // ex: { name: "PC" } or { platform: { name: "PC" } }
-    return [ field.name || (field.platform && field.platform.name) || (field.genre && field.genre.name) ].filter(Boolean);
-  }
-
-  // cas : string / number
-  return [String(field)];
-}
-
-// --- FILTRAGE DYNAMIQUE (remplace ta fonction actuelle) ---
-searchInput.addEventListener("input", applyFilters);
-platformFilters.forEach(cb => cb.addEventListener("change", applyFilters));
-genreFilters.forEach(cb => cb.addEventListener("change", applyFilters));
-
+// ========================
+// FILTRAGE DYNAMIQUE
+// ========================
 function applyFilters() {
-  const searchTerm = searchInput.value.trim().toLowerCase();
-  const selectedPlatforms = Array.from(platformFilters).filter(cb => cb.checked).map(cb => cb.value);
-  const selectedGenres = Array.from(genreFilters).filter(cb => cb.checked).map(cb => cb.value);
-
-  // debug rapide (désactive si ça spamme)
-  // console.log('selectedPlatforms', selectedPlatforms, 'selectedGenres', selectedGenres, 'search', searchTerm);
+  const searchTermValue = searchInput.value.trim().toLowerCase();
+  const selectedPlatformsValues = Array.from(platformFilters).filter(cb => cb.checked).map(cb => cb.value);
+  const selectedGenresValues = Array.from(genreFilters).filter(cb => cb.checked).map(cb => cb.value);
 
   filteredGames = allGames.filter(game => {
-    // 1) recherche par nom
-    const name = (game.name || '').toString().toLowerCase();
-    const matchSearch = !searchTerm || name.includes(searchTerm);
+    const name = (game.name || '').toLowerCase();
+    const matchSearch = !searchTermValue || name.includes(searchTermValue);
 
-    // 2) plateformes : on normalise en tableau de noms
-    // essaye plusieurs clés possibles : game.platform, game.platforms, game.platforms[].platform.name, game.platform (string)
-    const gamePlatforms = extractNames(game.platforms ?? game.platform ?? game.platforms_raw ?? []);
-    const matchPlatform = selectedPlatforms.length === 0 || gamePlatforms.some(p => selectedPlatforms.includes(p));
+    const gamePlatforms = extractNames(game.platforms ?? game.platform);
+    const matchPlatform = selectedPlatformsValues.length === 0 || gamePlatforms.some(p => selectedPlatformsValues.includes(p));
 
-    // 3) genres : normalise aussi
-    const gameGenres = extractNames(game.genres ?? game.genre ?? []);
-    const matchGenre = selectedGenres.length === 0 || gameGenres.some(g => selectedGenres.includes(g));
+    const gameGenres = extractNames(game.genres ?? game.genre);
+    const matchGenre = selectedGenresValues.length === 0 || gameGenres.some(g => selectedGenresValues.includes(g));
 
     return matchSearch && matchPlatform && matchGenre;
   });
@@ -150,19 +172,11 @@ function applyFilters() {
   renderPagination();
 }
 
+searchInput.addEventListener("input", applyFilters);
+platformFilters.forEach(cb => cb.addEventListener("change", applyFilters));
+genreFilters.forEach(cb => cb.addEventListener("change", applyFilters));
 
-// FAVORIS
-function toggleFavorite(gameId) {
-  let favorites = JSON.parse(localStorage.getItem("favorites") || "[]");
-  if (favorites.includes(gameId)) {
-    favorites = favorites.filter(id => id !== gameId);
-  } else {
-    favorites.push(gameId);
-  }
-  localStorage.setItem("favorites", JSON.stringify(favorites));
-  renderGames();
-}
-
-// LANCEMENT
+// ========================
+// INITIALISATION
+// ========================
 fetchGames();
-
